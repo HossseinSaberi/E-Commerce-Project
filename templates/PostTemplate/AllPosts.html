@@ -1,0 +1,76 @@
+{% extends 'MainTemplate.html' %}
+
+{% load static %}
+
+
+{% block Header %}
+
+    <section id="hero">
+        <div class="hero-container">
+        <a href="index.html" class="hero-logo" data-aos="zoom-in"><img src="{% static  ' img/logo.png'%}hero-logo.png'%}" alt=""></a>
+        <h1 data-aos="zoom-in">Supplier Weblog For Sharing Their Proucts</h1>
+        <h2 data-aos="fade-up">Watch Them  ,  Like Them  and choose them for buy!</h2>
+        <a data-aos="fade-up" data-aos-delay="200" href="#portfolio" class="btn-get-started scrollto">Let's Go!</a>
+        </div>
+    </section>
+
+{% endblock Header %}
+
+{% block AllPost %}
+
+    <section class="last-products border-radius">
+        
+            <section id="portfolio" class="portfolio">
+                <div class="container">
+
+                    <div class="section-title" data-aos="fade-up">
+                    <h2>{{cat_or_tag}} Post</h2>
+                    <p>you can see {{cat_or_tag}} post here !</p>
+                    <br/>
+                    <div class="row" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">{{cat_or_tag}}</li>
+                        </ul>
+                    </div>
+
+                        
+                    <div class="row" data-aos="fade-up" data-aos-delay="200">
+                        {% if Posts %}
+                            {% for post in Posts %} 
+                            <div class="col-lg-4 col-md-4 portfolio-item filter-app">
+                                <div class="portfolio-wrap">
+                                    {% if post.image %}
+                                    <img id="allPic" src="{{post.image.url}}" class="img-fluid" alt="{{post.image.url}}">
+                                    {% endif %}
+                                <div class="portfolio-info">
+                                    <h4>{{post.title}}</h4>
+                                    <p>{{post.short_description}}</p>
+                                    <div class="portfolio-links">
+                                    <a href="{{post.image.url}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{post.title}}"><i class="bx bx-plus"></i></a>
+                                    <a href="/blog/post_Details/{{post.slug}}" title="More Details"><i class="bx bx-link"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                        {% else %}
+
+                            <div>
+
+                                <div class="alert alert-secondary mx-5">
+                                    <p class="p-5">there is no post here!</p>
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+            </section>
+       
+    </section>
+{% endblock AllPost %}
+

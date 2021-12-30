@@ -1,0 +1,57 @@
+{% extends "MainTemplate.html" %}
+{% load widget_tweaks %}
+{% block EditPost %}
+<div class="row">
+    <h2  class='d-flex justify-content-center mt-5'>Edit {{post.title}}</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <form method="POST" action="{% url 'EditPost' slug=post.slug%}" enctype='multipart/form-data'>
+
+            {%csrf_token%}
+            <div class="container">
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>title : </label>
+                        {% render_field form.title  type="text" class="form-control" placeholder="title"%}
+                    </div>
+                    <div class="col-md-6">
+                        <label>slug : </label>
+                        {% render_field form.slug class="form-control"%}
+                    </div>
+                </div> 
+                <div class="form-group row my-3">
+                    <label>Short Description : </label>
+                    {% render_field form.shortDescription class="form-control"%}
+                </div>
+                <div class="form-group row my-3">
+                    <label>main Text : </label>
+                    {% render_field form.Text class="form-control"%}
+                </div> 
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>main image : </label>
+                        {% render_field form.image class="form-control"%}
+                    </div>
+                </div> 
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>Categories : </label>
+                        {% render_field form.category class="form-control"%}
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tags : </label>
+                        {% render_field form.tag class="form-control"%}
+                    </div>
+                </div> 
+                
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-lg btn-warning my-5">Edit</button>
+            </div>
+        
+        </form>
+    </div>
+</div>
+
+{% endblock EditPost %}

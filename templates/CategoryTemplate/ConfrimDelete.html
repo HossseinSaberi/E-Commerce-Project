@@ -1,0 +1,17 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block deleteCategory %}
+
+<div class="d-flex justify-content-center my-5">
+    <form action="{%url 'DeleteCategory' cat_id=category.id%}" method="post">
+
+        {%csrf_token%}
+
+        <p>are you sure to delete this Category?</p>
+        {%render_field form.as_p%}
+        <button class='btn btn-danger'type="submit" value="DEL">Delete</button>
+        <a href="/blog/category_Archive/">back to Category page</a>
+
+    </form>
+</div>
+{% endblock deleteCategory %}

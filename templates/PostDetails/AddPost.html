@@ -1,0 +1,57 @@
+{% extends "MainTemplate.html" %}
+{% load widget_tweaks %}
+{% block EditPost %}
+<div class="row">
+    <h2  class='d-flex justify-content-center mt-5'>Add New Post</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <form method="POST" enctype='multipart/form-data'>
+
+            {%csrf_token%}
+            <div class="container">
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>title : </label>
+                        {% render_field form.title  type="text" class="form-control" placeholder="title"%}
+                    </div>
+                    <div class="col-md-6">
+                        <label>slug : </label>
+                        {% render_field form.slug class="form-control" placeholder="format : xxx-xxx-xxx-xxx"%}
+                    </div>
+                </div> 
+                <div class="form-group row my-3">
+                    <label>Short Description : </label>
+                    {% render_field form.shortDescription class="form-control" placeholder="shortDescription"%}
+                </div>
+                <div class="form-group row my-3">
+                    <label>main Text : </label>
+                    {% render_field form.Text class="form-control" placeholder="Text"%}
+                </div> 
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>main image : </label>
+                        {% render_field form.image class="form-control" placeholder="image"%}
+                    </div>
+                </div> 
+                <div class="form-group row my-3">
+                    <div class="col-md-6">
+                        <label>Categories : </label>
+                        {% render_field form.category class="form-control" placeholder="category"%}
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tags : </label>
+                        {% render_field form.tag class="form-control" placeholder="tag"%}
+                    </div>
+                </div> 
+                
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-lg btn-success my-5">ADD</button>
+            </div>
+        
+        </form>
+    </div>
+</div>
+
+{% endblock EditPost %}

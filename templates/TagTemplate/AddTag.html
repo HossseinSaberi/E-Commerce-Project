@@ -1,0 +1,22 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block AddTag %}
+
+<div class="row">
+    <h2  class='d-flex justify-content-center mt-5'>Add Tag</h2>
+</div>
+<div class="d-flex justify-content-center my-5">
+    <form method="post" action="{%url 'AddNewTag'%}">
+
+        {%csrf_token%}
+        <label>title :</label>
+        {%render_field form.title class="form-control" placeholder="format : xx_xxx_xxxx_xx"%}
+        <br>
+        <div class="d-flex justify-content-center my-3">
+        <button class='btn btn-success'type="submit">Add New Tag</button>
+        <a href="/blog/category_Archive/" class='p-2'>back to Tags list</a>
+        </div>
+
+    </form>
+</div>
+{% endblock AddTag %}

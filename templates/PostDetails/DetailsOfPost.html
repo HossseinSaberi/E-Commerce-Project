@@ -1,0 +1,138 @@
+{% extends "MainTemplate.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+{% block DetailPost %}
+
+<!-- ======= Breadcrumbs ======= -->
+<section class="breadcrumbs pb-0">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <ol>
+        <li><a href="/blog">Home</a></li>
+        <li><a href="/blog/category_Archive">Category</a> </li>
+        <li><a href="/blog/category_Archive/{{category.1.id}}">{{category.1}}</a></li>
+      </ol>
+      <div>
+        <a href="/blog/DelPost/{{PostDetails.slug}}" class="btn btn-danger">DELETE</a>
+        <a href="/blog/EditPost/{{PostDetails.slug}}" class="btn btn-warning">EDIT</a>
+      </div>
+    </div>
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<section class="inner-page pt-0">
+  <div class="container">
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+          <h2>{{PostDetails.title}}</h2>
+          {% for each_category in category %}
+          <a href="/blog/category_Archive/{{each_category.id}}" id="category_item_inDetails"> {{each_category.title}}
+          </a>
+          {% endfor %}
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-right">
+            <div class="image" id="about_image">
+              {% if PostDetails.image %}
+              <img src="{{PostDetails.image.url}}" alt="{{PostDetails.image}}" class="img-fluid" alt="">
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-left">
+            <div class="content pt-4 pt-lg-0 pl-0 pl-lg-3 ">
+              <br />
+              <h3>{{PostDetails.shortDescription}}</h3>
+              <p class="fst-italic">
+                {{PostDetails.Text}}
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <br />
+      <hr />
+      {% for tag in tags %}
+      <a href="/blog/tag_Archive/{{tag.id}}"> #{{tag.title}} </a>
+      {% endfor %}
+      <hr />
+      <br />
+
+      <div class="row">
+        <section id="contact" class="contact section-bg">
+          <div class="container">
+  
+            <div class="section-title">
+              <h2>Comments</h2>
+              <p>Put your comments here , Thank you! </p>
+            </div>
+  
+            <div class="container">
+  
+              {% for comment in comments %}
+  
+              <div class="row" data-aos="fade-right">
+  
+                <ul>
+                  <li id="Comment_id">
+                    <div>
+                      <p><b>{{comment.author}}</b> said : </p>
+                      <p>on {{comment.create_at}}</p>
+                      <hr />
+                      <p>
+                        {{comment.text}}
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+  
+              </div>
+  
+              {% endfor %}
+  
+              {% if request.user.is_authenticated %}
+            </div>
+            <div class='container border rounded'>
+            <form action="{%url 'post_details' slug=PostDetails.slug%}" method="POST">
+              {% csrf_token %}
+              <div class="container">
+                <div class="form-group row my-3">
+                  <div class="col-md-6">
+                    <label>Name : </label>
+                    {%render_field forms.author class="form-control"%}
+                  </div>
+                  <div class="col-md-6">
+                    <label>E-mail : </label>
+                    {%render_field forms.email class="form-control"%}
+                  </div>
+                </div>
+                <div class="row mx-2">
+                  <label>Main Text :</label>
+                  {%render_field forms.text class="form-control" placeholder="write your comment here ..."%}
+                </div>
+                <div class="d-flex justify-content-center my-2">
+                  <button class="btn btn-lg btn-success" type="submit" value="Add comment">Add Comment</button>
+                </div>
+                </div> 
+            </form>
+          </div>
+          {% else %}
+            <div class="container">
+              <div class="alert alert-warning text-center">
+                for put the comment on this post please login First
+                <br>
+                <a href="/account/login/" class="btn btn-primary mt-3">LOGIN</a>
+              </div>
+            </div>
+          {% endif %}
+    </div>
+      </div>
+</section>
+
+{% endblock DetailPost %}

@@ -1,0 +1,16 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block deletePost %}
+
+<div class="d-flex justify-content-center my-5">
+    <form action="{%url 'DeletePost' slug=post.slug%}" method="post">
+
+        {%csrf_token%}
+
+        <p>are you sure to delete this Post?</p>
+        <button class='btn btn-danger'type="submit">DELETE</button>
+        <a href="{%url 'post_details' slug=post.slug%}">back to Post</a>
+
+    </form>
+</div>
+{% endblock deletePost %}
