@@ -48,25 +48,26 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
-    <div class="container ">
+    <div class="container">
       <div class="row">
         <div class="col-md-8">
           <nav id="navbar" class="navbar">
             <ul>
-              <li><a class="nav-link scrollto active" href="/blog/">Home</a></li>
+              <li><a class="nav-link scrollto active" href="/">Home</a></li>
               {% if request.user.is_authenticated %}
-              <li><a class="nav-link scrollto" href="/blog/usersPosts/"><b> {{request.user.username}} </b> , Welcome !</a>
+              <li><a class="nav-link scrollto" href="/usersPosts/"><b> {{request.user.username}} </b> , Welcome !</a>
               </li>
-              <li><a class="nav-link scrollto" href="/blog/AddNewPost/">New Post</a></li>
+              <li><a class="nav-link scrollto" href="/AddNewPost/">New Post</a></li>
+              <li><a class="nav-link scrollto" href="/manager/">Manager</a></li>
               <li><a class="nav-link scrollto" href="/account/logout/">LogOut</a></li>
               {% else %}
               <li><a class="nav-link scrollto" href="/account/signin/">SignUp</a></li>
               <li><a class="nav-link scrollto" href="/account/login/">LogIn</a></li>
+              <li><a class="nav-link scrollto" href="/aboutUs/">About</a></li>
+              <li><a class="nav-link scrollto" href="/contactUs/">Contact</a></li>
               {% endif %}
-              <li><a href="/blog/category_Archive/">Category</i></a>
-              <li><a href="/blog/tag_Archive/">Tags</i></a>
-              <li><a class="nav-link scrollto" href="/blog/aboutUs/">About</a></li>
-              <li><a class="nav-link scrollto" href="/blog/contactUs/">Contact</a></li>
+              <li><a href="/category_Archive/">Category</i></a>
+              <li><a href="/tag_Archive/">Tags</i></a>
             </li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
@@ -80,8 +81,8 @@
           </div>
         </form>
       </div>
-
     </div>
+  </div>
   </header><!-- End Header -->
 
   <main id="main">
@@ -93,6 +94,7 @@
         {% if messages %}
 
         {% for message in messages %}
+        <br>
         <div class="alert alert-{{message.extra_tags}}">
           {{message}}
         </div>

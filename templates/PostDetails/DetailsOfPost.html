@@ -95,8 +95,7 @@
               </div>
   
               {% endfor %}
-  
-              {% if request.user.is_authenticated %}
+
             </div>
             <div class='container border rounded'>
             <form action="{%url 'post_details' slug=PostDetails.slug%}" method="POST">
@@ -122,15 +121,6 @@
                 </div> 
             </form>
           </div>
-          {% else %}
-            <div class="container">
-              <div class="alert alert-warning text-center">
-                for put the comment on this post please login First
-                <br>
-                <a href="/account/login/" class="btn btn-primary mt-3">LOGIN</a>
-              </div>
-            </div>
-          {% endif %}
     </div>
       </div>
 </section>

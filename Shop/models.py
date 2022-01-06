@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.base import Model
-from django.utils import text
+from django.utils import text, tree
 from django.utils.text import slugify
 from Users.models import Supplier
+from .managers import SubmittedShopManager , DeletedShopManager , DraftShopManager
 
 # Create your models here.
 
@@ -14,7 +15,7 @@ class Category(models.Model):
     category_image = models.ImageField(
         verbose_name='Category Image',  upload_to='categoryImage/', height_field=None, width_field=None)
     category_parent = models.ForeignKey(
-        "self", verbose_name='Parent', null=True, blank=True, related_name='sub_category', on_delete=models.SET_NULL)
+        "self", verbose_name='Parent', null=True, blank=True, related_name='sub_category', on_delete=models.SET_DEFAULT , default="")
 
     class Meta:
         verbose_name = 'Categorie'
@@ -45,22 +46,31 @@ class Shop(models.Model):
         (2 , 'draft'),
         (3 , 'deleted'),
     ]
+    objects = models.Manager()
+    submitted_shop = SubmittedShopManager()
+    darft_shop = DraftShopManager()
+    deleted_shop = DeletedShopManager()
 
     shop_name = models.CharField(verbose_name='Shop Name', max_length=50)
     shop_address = models.TextField(
         verbose_name='Shop Address', max_length=200)
     shop_phone = models.CharField(verbose_name='Shop Phone', max_length=12)
     shop_logo = models.ImageField(
-        verbose_name='Image Logo',  upload_to='shopImage/', height_field=None, width_field=None)
+        verbose_name='Image Logo',  upload_to='shopImage/', null=True , blank=True)
 
-    supplier = models.OneToOneField(
+    supplier = models.ForeignKey(
         Supplier, verbose_name='Supplier', on_delete=models.CASCADE, blank=True, null=True)
     category = models.ForeignKey(
         Category, verbose_name='Category', on_delete=models.PROTECT)
 
+    created_at = models.TimeField(("Created at"), auto_now_add=True , blank=True , null=True)
+    update_at = models.TimeField(("Update at"), auto_now_add=True , blank=True , null=True)
+
     status = models.IntegerField(("Status") , choices=STATUS , default=1)
     def __str__(self):
         return self.shop_name
+
+
 
 
 class Product(models.Model):
@@ -78,20 +88,33 @@ class Product(models.Model):
     created_at = models.DateField(
         'Created At', auto_now_add=True)
     update_at = models.DateField('Update At', auto_now_add=True)
-    slug = models.SlugField('Slug')
+    slug = models.SlugField('Slug' , null=True , blank=True)
     stock = models.IntegerField('Number Of Product', default=0)
     shop = models.ForeignKey(Shop, verbose_name='Shop',
                              on_delete=models.CASCADE, related_name='product_shop_name')
     tag = models.ManyToManyField(Tag, verbose_name=("Tags"))
+    category = models.ManyToManyField(
+        Category, verbose_name='Category')
 
-    # def save(self, *args, **kwargs):
-    #     if not self.slug:
-    #         complete_slug = self.title+'-'+self.shop
-    #         self.slug = slugify(complete_slug)
-    #         super(Product, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        complete_slug = f"{self.product_name}-{self.shop}"
+        complete_slug = complete_slug.replace(" ","-")
+        self.slug = slugify(complete_slug)
+        super(Product, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.product_name + ' from '+self.shop.shop_name
+
+    @property
+    def calculate_discount(self):
+        return self.price-(self.price*self.discount/100)
+
+    
+    # def calculate_stock(self , number):
+    #     if self.stock  
+
+
+    ######## Calculate Stock #######
 
 
 class Comment(models.Model):

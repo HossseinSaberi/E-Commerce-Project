@@ -1,0 +1,42 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+{% load widget_tweaks %} 
+{% load static %} 
+{% block AddOrEditCategory %}
+    
+    <div class="row">
+      <div class="card" id="accepted_shop">
+        <div class="p-5">
+          <div class="container">
+            <h3 class="title">CREATE NEW CATEGORY</h3>
+            <div>
+              <form method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="row">
+                  <div class="form-group col-md-4 pl-md-1">
+                    <label>CATEGORY TITLE : </label>
+                    {% render_field form.category_title type="text" class="form-control" placeholder="Enter Your Product Name Here..."%}
+                  </div>
+                  <div class="form-group col-md-4 pl-md-1">
+                    <label>CATEGORY PARENT : </label>
+                    {% render_field form.category_parent type="file" class="form-control" placeholder="Choose Your Product Main Image Here..."%}
+                  </div>
+                  <div class="form-group col-md-4 pl-md-1">
+                    <label>CATEGORY IMAGE : </label>
+                    {% render_field form.category_image class="form-control" placeholder="Choose Your Shop Here ..."%}
+                </div>
+                </div>
+            </div>    
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-lg btn-success my-5">
+                    SUBMIT
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endblock AddOrEditCategory %}
+    

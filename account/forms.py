@@ -1,7 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , UserChangeForm
 from django.contrib.auth import get_user_model
 from django.forms import fields
+from Users.models import Customer
 
 User = get_user_model()
 class LoginForm(forms.Form):
@@ -19,13 +20,16 @@ class SignInForm(UserCreationForm):
         model = User
         fields = ('Email' , 'username' , 'password1' , 'password2' ,)
 
-    # def clean(self):
-    #     cleaned_data = super(SignInForm, self).clean()
-    #     email = cleaned_data.get("Email")
-    #     username = cleaned_data.get("username")
-    #     # password = cleaned_data.get("password")
-    #     # re_password = cleaned_data.get("re_password")
 
-    #     # if password != re_password:
-    #     #     raise forms.ValidationError(
-    #     #         'Password and RePassword does not match !')
+# class CustomUserCreationForm(UserCreationForm):
+
+#     class Meta:
+#         model = Customer
+#         fields = ('email',)
+
+
+# class CustomUserChangeForm(UserChangeForm):
+
+#     class Meta:
+#         model = Customer
+#         fields = ('email',)

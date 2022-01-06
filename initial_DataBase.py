@@ -1,0 +1,6 @@
+BACKEND_POSTGRES_PYCOPG2 = 'django.db.backends.postgresql_psycopg2'
+NAME = 'ecommerce_db'
+USER = 'postgres'
+PASSWORD = '2966'
+HOST = '172.17.0.2'
+PORT = '5432'

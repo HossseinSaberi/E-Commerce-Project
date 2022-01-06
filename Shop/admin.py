@@ -20,12 +20,12 @@ class FeatureAdmin(admin.ModelAdmin):
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ('show_image', 'shop_name', 'supplier', 'category')
+    list_display = ('show_image', 'shop_name', 'supplier', 'category' , 'status')
 
     fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': (('shop_name', 'supplier'), 'shop_address', ('shop_logo', 'category' , 'status')),
+            'fields': (('shop_name', 'supplier' , 'shop_phone'), 'shop_address', ('shop_logo', 'category' , 'status')),
         }
         ),
     )
@@ -52,7 +52,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': (('product_name', 'price'), ('shop', 'slug', 'stock'), ('product_main_image', ), ('discount_available', 'discount'), ('text', 'product_short_description'), 'tag'),
+            'fields': (('product_name', 'price'), ('shop', 'slug', 'stock'), ('product_main_image', ), ('discount_available', 'discount'), ('text', 'product_short_description'), ('tag', 'category')),
         }
         ),
     )

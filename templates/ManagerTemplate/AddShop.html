@@ -1,0 +1,56 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block AddOrEditShop %}
+
+
+<div class="row">
+    <div class="card" id="accepted_shop">
+        <div class="p-5">
+            <div class="container">
+                <h3 class="title">CREATE NEW SHOP</h3>
+                <div>
+                    <form method="POST" enctype='multipart/form-data'>
+
+                        {%csrf_token%}
+                        <div class="row">
+                            <div class="form-group col-md-4 pl-md-1">
+                                
+                                    <label>SHOP NAME : </label>
+                                    {% render_field form.shop_name type="text" class="form-control" placeholder="Enter Your Shop Name Here ..."%}
+                                
+                            </div>
+                            <div class="form-group col-md-4 pl-md-1">
+                                    <label>SHOP PHONE : </label>
+                                    {% render_field form.shop_phone type="text" class="form-control" placeholder="Enter Your Shop Phone Here ..."%}
+                            </div>
+                            <div class="form-group col-md-4 pl-md-1">
+                                    <label>LOGO : </label>
+                                    {% render_field form.shop_logo type="file" class="form-control" placeholder="Choose Your Shop Logo Here ..."%}
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="form-group col-md-8 pl-md-1">
+                                    <label>SHOP ADDRESS : </label>
+                                    <div id="TextShop">
+                                        {% render_field form.shop_address type="text" class="form-control" placeholder="Enter Your Shop Address Here ..."%}
+                                    </div>
+                            </div>
+                                <div class="form-group col-md-4 pl-md-1">
+                                    <label>SHOP CATEGORY : </label>
+                                    {% render_field form.category class="form-control" placeholder="Choose Your Shop Category Here ..."%}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-lg btn-success my-5">ADD</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock AddOrEditShop %}

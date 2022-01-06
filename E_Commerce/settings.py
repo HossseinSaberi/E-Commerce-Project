@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from initial_DataBase import *
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,8 +45,12 @@ INSTALLED_APPS = [
     'Post',
     'account',
     'widget_tweaks',
+    'django_filters',
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'account.backends.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -98,12 +103,12 @@ WSGI_APPLICATION = 'E_Commerce.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ecommerce_db', 
-        'USER': 'postgres', 
-        'PASSWORD': '2966',
-        'HOST': '172.17.0.2', 
-        'PORT': '5432',
+        'ENGINE': BACKEND_POSTGRES_PYCOPG2,
+        'NAME': NAME, 
+        'USER': USER, 
+        'PASSWORD': PASSWORD,
+        'HOST': HOST, 
+        'PORT': PORT,
     }
 }
 
