@@ -31,7 +31,11 @@ class MainManagerPage(TemplateView, DetailView):
 
 class CreateShop(LoginRequiredMixin, View):
     form = CreateOrEditShopForm
-
+    model = Shop
+    success_url = '/manager/'
+    context_object_name = 'form'
+    template_name = 'ManagerTemplate/AddShop.html'
+    
     def get(self, request, *args, **kwargs):
         return render(request, 'ManagerTemplate/AddShop.html', {'form': self.form, })
 
@@ -50,7 +54,7 @@ class CreateShop(LoginRequiredMixin, View):
         return redirect('/manager/')
 
     def dispatch(self, request, *args, **kwargs):
-        super().dispatch(request, *args, **kwargs)
+        
         check_draft_shops_status = Shop.darft_shop.filter(
             supplier__customer__id=request.user.id)
         check_success_shops_status = Shop.submitted_shop.filter(
@@ -64,6 +68,7 @@ class CreateShop(LoginRequiredMixin, View):
             messages.error(
                 request, 'You cannot have a shop any more ! you have one of them !', extra_tags='danger')
             return redirect ('/manager/')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class EditShop(LoginRequiredMixin, UpdateView):
