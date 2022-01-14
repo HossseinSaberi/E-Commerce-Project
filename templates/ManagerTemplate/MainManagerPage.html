@@ -44,6 +44,9 @@
       href="{% static  'ManagerStatic/css/black-dashboard.css' %}"
       rel="stylesheet"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jscript/graph.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </head>
 
   <body class="">
@@ -97,12 +100,6 @@
               <a href="/manage_order/ListOrder/">
                 <i class="tim-icons icon-delivery-fast"></i>
                 <p>Order List</p>
-              </a>
-            </li>
-            <li>
-              <a href="/manage_order/ListOrderGraph/">
-                <i class="tim-icons icon-delivery-fast"></i>
-                <p>Graph</p>
               </a>
             </li>
           </ul>
@@ -207,9 +204,9 @@
           <!--End List Product-->
           <!--Delete Product-->
 
-            {% block DeleteConfrimProduct %}
-            
-            {% endblock DeleteConfrimProduct %}
+          {% block DeleteConfrimProduct %}
+          
+          {% endblock DeleteConfrimProduct %}
 
           <!--End Delete Product-->
 
@@ -225,10 +222,6 @@
             {% endblock ListOrders %}
 
           <!--End List Order-->
-          <!-- List Order Graph-->
-          {% block Chart %}
-          {% endblock Chart %}
-          <!--End  List Order Graph-->
 
           <!--Add Product-->
           

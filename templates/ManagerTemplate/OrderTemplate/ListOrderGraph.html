@@ -1,62 +1,30 @@
 {% comment %} {% extends 'ManagerTemplate/MainManagerPage.html' %} {% endcomment %}
-{% comment %} {% load widget_tweaks %}  {% endcomment %}
-{% comment %} {% load static %}  {% endcomment %}
- 
+{% extends 'ManagerTemplate/OrderTemplate/ListOrder.html' %}
+{% load widget_tweaks %} 
+{% load static %} 
 {% block Chart %}
-  <div id="container" style="width: 75%;">
-    <canvas id="pie-chart"></canvas>
+
+<div>
+  <div class="row">
+    <div class="mx-1">
+      <canvas id="population-chart" width="400" height="100" data-url="{% url 'population-chart' %}"></canvas>
+      {%csrf_token%}
+      <script>
+          const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')
+          var $populationChart = $("#population-chart");
+          $.ajax({
+          url: "http://localhost:8000/manage_order/ListOrderGraph/",
+          headers: {
+          'X-CSRFToken': csrftoken
+          },
+          success: function (data) {
+          console.log('data label', data)
+     
+          }
+          });
+      </script>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
-
-    var config = {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: {{ data|safe }},
-          backgroundColor: [
-            '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
-          ],
-          label: 'Population'
-        }],
-        labels: {{ labels|safe }}
-      },
-      options: {
-        responsive: true
-      }
-    };
-
-    window.onload = function() {
-      var ctx = document.getElementById('pie-chart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-    };
-    const mixedChart = new Chart(ctx, {
-      data: {
-          datasets: [{
-              type: 'bar',
-              label: 'Bar Dataset',
-              data: [10, 20, 30, 40]
-          }, {
-              type: 'line',
-              label: 'Line Dataset',
-              data: [50, 50, 50, 50],
-          }],
-          labels: ['January', 'February', 'March', 'April']
-      },
-      options: options
-  });
-  const config = {
-    type: 'scatter',
-    data: data,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  };
-  </script>
-
+</div>
 {% endblock Chart %}

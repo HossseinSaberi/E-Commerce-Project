@@ -4,6 +4,13 @@
 {% block ListOrders %}
 <div class="card-body">
   <div class="row mb-4">
+    
+    <div class="row">
+      <div class="mx-1">
+        <canvas id="population-chart" width="400" height="100" data-url="{% url 'population-chart' %}"></canvas>
+      </div>
+    </div>
+
     <form method="GET">
       {%csrf_token%}
       <div class="row">
@@ -82,8 +89,55 @@
         </tbody>
       </table>
     </div>
+
+    
+    <div>
+
+      {%csrf_token%}
+      <script>
+        $(function () {
+          const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')
+          var $populationChart = $("#population-chart");
+          console.log($populationChart)
+          $.ajax({
+          url: "http://localhost:8000/manage_order/ListOrderGraph/",
+          headers: {
+          'X-CSRFToken': csrftoken
+          },
+          success: function (data) {
+          console.log('data label', data)
+          var ctx = $populationChart[0].getContext("2d");
+          new Chart(ctx, {
+          type: 'bar',
+          data: {
+          labels: data.labels,
+          datasets: [{
+          label: 'Sales',
+          backgroundColor: 'blue',
+          data: data.data
+          }]
+          },
+          options: {
+          responsive: true,
+          legend: {
+          position: 'top',
+          },
+          title: {
+          display: true,
+          text: 'Sales Report Bar Chart'
+          },
+          scales: {
+            x: {
+                beginAtZero: true
+            }
+            }
+        }
+          });
+          }
+          });
+        });
+      </script>
+    </div>
+    </div>
   </div>
-</div>
-
-
 {% endblock ListOrders %}

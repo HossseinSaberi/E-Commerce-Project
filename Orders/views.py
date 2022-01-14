@@ -1,9 +1,10 @@
 from cgi import print_environ
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.template import context
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView , UpdateView , TemplateView
+from django.views.generic import DetailView , UpdateView , TemplateView, View
 from .forms import EditOrderDetails
 from .models import Orders , OrderItems
 from django.db.models.query_utils import Q
@@ -38,21 +39,28 @@ class ListOfOrders(LoginRequiredMixin , ListView):
         queryset=Orders.objects.filter(shop__supplier__customer__id = self.request.user.id).values('update_at__day' , 'update_at__month').annotate(all_sold=Sum(F('product__price')*F('order_item__quantity')))
         queryset=Orders.objects.filter(shop__supplier__customer__id = self.request.user.id).values('update_at__day' , 'update_at__month').annotate(all_sold=Sum('total_price'))
 
-
-def chart_data(request):
-    labels = []
-    data = []
-
-    queryset=Orders.objects.filter(shop__supplier__customer__id = request.user.id).values('update_at__day' , 'update_at__month').annotate(all_sold=Sum(F('product__price')*F('order_item__quantity')))
+class Chart (LoginRequiredMixin , View):
     
-    for order in queryset:
-        labels.append(order['update_at__day'])
-        data.append(order['all_sold'])
+    def get(self, request, *args, **kwargs):
+        labels = []
+        data = []
 
-    return render(request, 'ManagerTemplate/OrderTemplate/ListOrderGraph.html', {
-        'labels': labels,
-        'data': data,
-    })
+        queryset=Orders.objects.filter(shop__supplier__customer__id = self.request.user.id).values('update_at__date').annotate(all_sold=Sum(F('product__price')*F('order_item__quantity')))
+        
+        for order in queryset:
+            labels.append(str(order["update_at__date"]))
+            data.append(order["all_sold"])
+            print(order)
+
+    # return render(request, 'ManagerTemplate/OrderTemplate/ListOrderGraph.html',context = {
+    #     'labels': labels,
+    #     'data': data,
+    # })
+
+        return JsonResponse(data={
+            'labels': labels,
+            'data': data,
+        })
 
 
 class OrderDetail(LoginRequiredMixin , UpdateView):
