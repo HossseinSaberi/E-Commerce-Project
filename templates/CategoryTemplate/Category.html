@@ -1,0 +1,64 @@
+{% extends "MainTemplate.html" %}
+
+{% load static %}
+
+{% block Categories %}
+
+<section id="faq" class="faq">
+  <div class="container">
+    
+    <div class="section-title" data-aos="fade-up">
+      <h2>All Categories</h2>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+      <a class='btn btn-success btn-lg' href="{% url 'AddCategory'%}">Add New Category</a>
+    </div>
+    {% for category in parrent_categury %}
+    <ul class="faq-list">
+      <li data-aos="fade-up" data-aos-delay="100">
+        <div class="row">
+          <div class="col-md-6">
+            <a id='faq{{category.id}}' href="{{category.id}}" data-bs-toggle="collapse"
+              data-bs-target="#faq{{category.id}}" class="collapsed faq_style">{{category.title}}
+            </a>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <a class='d-inline-block' href="/blog/DeleteCategory/{{category.id}}">
+              <i class='bi-trash'></i>
+            </a>
+            <a class='d-inline-block' href="/blog/EditCategory/{{category.id}}">
+              <i class='bi-pencil'></i>
+            </a>
+          </div>
+        </div>
+        <ul>
+          {% for sub_category in Categories%}
+          {% if sub_category.parent.id == category.id %}
+
+              <li id="faq{{category.id}}" class="faq_style collapse" data-bs-parent=".faq-list">
+                <div class= 'row'>
+                  <div class="col-md-6">
+                    <a href="{{sub_category.id}}">{{sub_category.title}}</a>
+                  </div>
+                  <div class="col-md-6 d-flex justify-content-center">
+                    <a class='d-inline-block' href="/blog/DeleteCategory/{{sub_category.id}}">
+                      <i class='bi-trash'></i>
+                    </a>
+                    <a class='d-inline-block' href="/blog/EditCategory/{{sub_category.id}}">
+                      <i class='bi-pencil'></i>
+                    </a>
+                  </div>
+                </div>
+              </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+
+    </ul>
+    {% endfor %}
+
+  </div>
+</section>
+
+{% endblock Categories %}

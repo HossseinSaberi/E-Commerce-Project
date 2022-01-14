@@ -1,0 +1,89 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+{% load widget_tweaks %} 
+{% load static %} 
+{% block ListOrders %}
+<div class="card-body">
+  <div class="row mb-4">
+    <form method="GET">
+      {%csrf_token%}
+      <div class="row">
+        {% render_field filter.form.status class="form-control col-md-3 mx-2" placeholder="Enter Your Product Name Here..."%}
+        {% render_field filter.form.begin_date type="date" class="form-control col-md-3 mx-2" placeholder="Enter Your Product Name Here..."%}
+        {% render_field filter.form.end_date type="date" class="form-control col-md-3 mx-2" placeholder="Enter Your Product Name Here..."%}
+        <input type='submit' class="btn btn-sm btn-outline-secondary col-md-2 m-0 ml-3">
+      </div>
+    </form>
+  </div>
+    <div class="table-responsive">
+      <table class="table tablesorter " >
+        <thead class=" text-primary">
+          <tr>
+            <th>
+              USER
+            </th>
+            <th>
+                SHOP
+            </th>
+            <th>
+              STATUS
+            </th>
+            <th>
+              TOTAL PRICE WITH NO DISCOUNT
+            </th>
+            <th>
+                DISCOUNT
+            </th>
+            <th>
+                TOTAL PRICE
+            </th>
+            <th>
+              UPDATE DATE
+            </th>
+            <th>
+                MANAGE
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for object in all_Orders %}
+            
+            <tr>
+                <td>
+                    {{object.user}}
+                </td>
+                <td>
+                    {{object.shop}}
+                </td>
+                <td>
+                    {{object.status}}
+                </td>
+                <td>
+                    {{object.total_price}}
+                </td>
+                <td>
+                    {{object.discount}}
+                </td>
+                <td>
+                    {{object.calculate_discount}}
+                </td>
+                <td>
+                  {{object.update_at}}
+                </td>
+                <td>
+                    <div >
+                        <a class='d-inline-block border-2 mx-3' href="/manage_order/{{object.id}}/OrderDetails/">
+                          <i class='tim-icons icon-components'></i>
+                        </a>
+                    </div>
+                </td>
+              </tr>
+
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+{% endblock ListOrders %}

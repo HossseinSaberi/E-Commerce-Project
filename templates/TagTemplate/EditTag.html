@@ -1,0 +1,22 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block EditTag %}
+
+<div class="row">
+    <h2  class='d-flex justify-content-center mt-5'>Edit Tag</h2>
+</div>
+<div class="d-flex justify-content-center my-5">
+    <form method="post" action="{%url 'EditNewTag' tag_id=tag.id%}">
+
+        {%csrf_token%}
+        <label>title :</label>
+        {%render_field form.title class="form-control" placeholder="format : xx_xxx_xxxx_xx"%}
+        <br>
+        <div class="d-flex justify-content-center my-3">
+        <button class='btn btn-warning'type="submit">Edit Tag</button>
+        <a href="/blog/category_Archive/" class='p-2'>back to Tags list</a>
+        </div>
+
+    </form>
+</div>
+{% endblock EditTag %}

@@ -1,0 +1,24 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block AddCategory %}
+
+<div class="row">
+    <h2  class='d-flex justify-content-center mt-5'>Add Category</h2>
+</div>
+<div class="d-flex justify-content-center my-5">
+    <form method="post">
+
+        {%csrf_token%}
+        <label>title :</label>
+        {%render_field form.title class="form-control"%}
+        <br>
+        <label>Parent Group : </label>
+        {%render_field form.parent class="form-control"%}
+        <div class="d-flex justify-content-center my-3">
+        <button class='btn btn-success'type="submit">Add New Category</button>
+        <a href="/blog/category_Archive/" class='p-2'>back to Category page</a>
+        </div>
+
+    </form>
+</div>
+{% endblock AddCategory %}

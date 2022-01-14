@@ -1,0 +1,68 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+{% load widget_tweaks %} 
+{% load static %} 
+{% block ListProduct %}
+
+<div class="d-flex justify-content-center mt-5">
+    <a class='btn btn-success btn-lg' href="{% url 'AddProduct'%}">Add New Product</a>
+  </div>
+<hr>
+<div class="card-body">
+    <div class="table-responsive">
+      <table class="table tablesorter border" >
+        <thead class=" text-primary">
+          <tr>
+            <th>
+              NAME
+            </th>
+            <th>
+              PRICE
+            </th>
+            <th>
+              STOCK
+            </th>
+            <th>
+                IMAGE
+            </th>
+            <th>
+                MANAGE
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for object in all_Product %}
+            
+            <tr>
+                <td>
+                    {{object.product_name}}
+                </td>
+                <td>
+                    {{object.price}}
+                </td>
+                <td>
+                    {{object.stock}}
+                </td>
+                <td>
+                    <img src="{{object.product_main_image.url}}" alt="" id=tag_category_image>
+                </td>
+                <td>
+                    <div >
+                        <a class='d-inline-block border-2 mx-3' href="/manager/{{object.id}}/DeleteProduct/">
+                          <i class='tim-icons icon-trash-simple'></i>
+                        </a>
+                        <a class='d-inline-block border-2 mx-3' href="/manager/{{object.id}}/EditProduct/">
+                          <i class='tim-icons icon-pencil'></i>
+                        </a>
+                      </div>
+                </td>
+              </tr>
+
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+{% endblock ListProduct %}

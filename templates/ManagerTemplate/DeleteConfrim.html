@@ -1,0 +1,22 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block DeleteConfrimModal %}
+
+<div class="d-flex justify-content-center my-5">
+    <form method="post">
+
+        {%csrf_token%}
+
+        <h4 class="title">are you sure to delete {{object.shop_name}}?</h4>
+        <button class='btn btn-sm btn-danger'type="submit">DELETE</button>
+        <a href="{%url 'Manager' %}">back to Post</a>
+
+    </form>
+</div>
+{% endblock DeleteConfrimModal %}
+
+
+

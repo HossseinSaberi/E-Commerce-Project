@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>HW16_Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/django-logo.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Knight - v4.7.0
+  * Template URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Hero Section ======= -->
+
+  {% block Header %}{% endblock Header %}
+
+  <!-- End Hero -->
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <nav id="navbar" class="navbar">
+            <ul>
+              <li><a class="nav-link scrollto active" href="/">Home</a></li>
+              {% if request.user.is_authenticated %}
+              <li><a class="nav-link scrollto" href="/usersPosts/"><b> {{request.user.username}} </b> , Welcome !</a>
+              </li>
+              <li><a class="nav-link scrollto" href="/AddNewPost/">New Post</a></li>
+              <li><a class="nav-link scrollto" href="/manager/">Manager</a></li>
+              <li><a class="nav-link scrollto" href="/account/logout/">LogOut</a></li>
+              {% else %}
+              <li><a class="nav-link scrollto" href="/account/signin/">SignUp</a></li>
+              <li><a class="nav-link scrollto" href="/account/login/">LogIn</a></li>
+              <li><a class="nav-link scrollto" href="/aboutUs/">About</a></li>
+              <li><a class="nav-link scrollto" href="/contactUs/">Contact</a></li>
+              {% endif %}
+              <li><a href="/category_Archive/">Category</i></a>
+              <li><a href="/tag_Archive/">Tags</i></a>
+            </li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+      </div>
+      <div class="col-md-4">
+        <form method="GET">
+          <div class="input-group">
+            <input type="text" class="form-control float-right" placeholder="Search Your idea here ..." , name="search_box">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <div class="container mt-5">
+
+      <div class="row">
+
+        {% if messages %}
+
+        {% for message in messages %}
+        <br>
+        <div class="alert alert-{{message.extra_tags}}">
+          {{message}}
+        </div>
+        {% endfor %}
+
+        {% endif %}
+
+      </div>
+
+    </div>
+    <!-- ======= Category archive Section ======= -->
+    {% block Categories %}{% endblock Categories %}
+    <!-- End Tag Section -->
+
+    <!-- ======= Tag archive Section ======= -->
+    {% block Tags %}{% endblock Tags %}
+    <!-- End Tag Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+
+    {% block Equipment %}{% endblock Equipment %}
+
+    <!-- End Testimonials Section -->
+    <!-- ======= Add Tag Section ======= -->
+
+    {% block AddTag %}{% endblock AddTag %}
+
+    <!-- ======= Edit Tag Section ======= -->
+
+    {% block EditTag %}{% endblock EditTag %}
+
+    <!-- ======= Edit Category Section ======= -->
+
+    {% block EditCategory %}{% endblock EditCategory %}
+
+    <!-- ======= Delete Tag Section ======= -->
+
+    {% block deleteTag %}{% endblock deleteTag %}
+
+    <!-- ======= Delete Post Section ======= -->
+
+    {% block deletePost %}{% endblock deletePost %}
+
+    <!-- ======= Add Category Section ======= -->
+    
+    {% block AddCategory %}{% endblock AddCategory %}
+
+    <!-- ======= About US archive Section ======= -->
+
+    {% block About %}{% endblock About %}
+
+    <!-- End About Us Section -->
+
+
+    <!-- ======= DetailPost Section ======= -->
+    {% block DetailPost %}{% endblock DetailPost %}
+    <!-- End DetailPost Section -->
+
+
+    <!-- ======= Portfolio Section ======= -->
+    {% block AllPost %}{% endblock AllPost %}
+    <!-- End Portfolio Section -->
+    
+    
+    <!-- ======= forms block ======= -->
+    {% block EditPost %}{% endblock EditPost %}
+    
+    <!-- ======= forms block ======= -->
+    {% block Login %}{%endblock Login%}
+    {% block SignIn %}{% endblock SignIn %}
+    <!-- ======= Frequently Asked Questions Section ======= -->
+
+    {% block WhyDjango %}{% endblock WhyDjango %}
+
+    <!-- End Frequently Asked Questions Section -->
+
+    <!-- ======= Confirm Delete Section ======= -->
+
+    {% block deleteCategory %}{% endblock deleteCategory %}
+
+
+
+    <!-- ======= Contact Section ======= -->
+
+    {% block ContactUs %}{% endblock ContactUs %}
+
+    <!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <a href="#header" class="scrollto footer-logo"><img src="{% static 'img/django-text.png'%}" alt=""></a>
+            <h3>See You Soon :)</h3>
+            <p>If You Like Our Site , Just Join Us ! <br /> Thank You</p>
+          </div>
+        </div>
+
+        <div class="row footer-newsletter justify-content-center">
+          <div class="col-lg-6">
+            <form action="" method="post">
+              <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js'%}"></script>
+
+</body>
+
+</html>

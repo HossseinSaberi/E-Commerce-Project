@@ -1,0 +1,17 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block deleteTag %}
+
+<div class="d-flex justify-content-center my-5">
+    <form action="{%url 'DeleteTag' tag_id=tag.id%}" method="post">
+
+        {%csrf_token%}
+
+        <p>are you sure to delete this Tag?</p>
+        {%render_field form.as_p%}
+        <button class='btn btn-danger'type="submit">DELETE</button>
+        <a href="/blog/tag_Archive/">back to Tag list</a>
+
+    </form>
+</div>
+{% endblock deleteTag %}

@@ -1,0 +1,26 @@
+{% extends 'ManagerTemplate/MainManagerPage.html' %}
+
+{% load static %}
+
+{% block ListTag %}
+
+<div class='container'>
+    <div class="d-flex justify-content-center mt-5">
+        <a class='btn btn-success btn-lg' href="{% url 'AddTag'%}">Add New Tag</a>
+    </div>
+    <div class='p-5'>
+        {% for tag in all_tag %}
+        <div class = 'd-inline-block' id="category_item_inDetails">
+            <a href=""> #{{tag.title}}</a>
+            <a class="btn btn-sm btn-outline-danger" href="/manager/{{tag.id}}/DeleteTag/">
+                <i class='tim-icons icon-trash-simple'></i>
+            </a>
+            <a href="/manager/{{tag.id}}/EditTag/" class="btn btn-sm btn-outline-warning">
+                <i class='tim-icons icon-pencil'></i>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock ListTag %}

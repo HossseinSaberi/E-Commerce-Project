@@ -1,0 +1,57 @@
+{% extends 'MainTemplate.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block SignIn %}
+<div class="container mt-5">
+
+    <div class="row">
+
+      {% if messages %}
+  
+      {% for message in messages %}
+        <div class="alert alert-{{message.extra_tags}}">
+          {{message}} 
+        </div>
+      {% endfor %}
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <div class="container my-5 py-5 border rounded">
+    <div class="row">
+      <h2  class='d-flex justify-content-center m-5'>Sign Up Page</h2>
+    </div>
+    <form method="POST">
+      {% csrf_token %} 
+      <div class="container">
+        <div class="row mx-5">
+          <div class="col-md-6">
+            <label>UserName : </label>
+            {%render_field form.username  class="form-control input-lg" placeholder="Enter UserName Here ..."%}
+          </div>
+          <div class="col-md-6">
+            <label>E-mail :</label>
+            {%render_field form.Email class="form-control input-lg" placeholder="Enter E-Mail Here ..." %}
+          </div>
+        </div>
+        <div class="row mx-5 mt-5">
+          <div class="col-md-6">
+            <label>PassWord : </label>
+            {%render_field form.password1  class="form-control input-lg" placeholder="Enter PassWord Here ..."%}
+          </div>
+          <div class="col-md-6">
+            <label>Mobile :</label>
+            {%render_field form.mobile_number  class="form-control input-lg" placeholder="Enter Mobile Here ..." %}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center my-3">
+        <button class='btn btn-lg btn-success' type="submit">Sign Up</button>
+      </div>
+    </form>
+  </div>
+
+{% endblock SignIn %}
