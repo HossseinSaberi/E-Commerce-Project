@@ -18,9 +18,9 @@ class TestShop(APITestCase):
         submit_shop = mommy.make(Shop, status=1, _quantity=3)
 
 
-        customer = Customer(username='test' , password='1234' , email='test@test.com' , mobile_number='09111111111')
-        customer.save()
-        self.supplier = Supplier.objects.create(customer=customer, supplier_blog= 'testblog')
+        self.customer = Customer(username='test' , password='1234' , email='test@test.com' , mobile_number='09111111111')
+        self.customer.save()
+        self.supplier = Supplier.objects.create(customer=self.customer, supplier_blog= 'testblog')
         self.category = Category.objects.create(category_title='test')
         self.tag = Tag.objects.create(title='test')
 
@@ -35,6 +35,8 @@ class TestShop(APITestCase):
 
     def test_shop_list(self):
         url = reverse('api_CreateShop')
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
 
         self.assertEquals(resp.status_code, 200)
@@ -50,6 +52,8 @@ class TestShop(APITestCase):
             "category": self.category.id,
             "supplier": self.supplier.id,
         }
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.post(url, data=body)
         all_shop = self.client.get(url)
 
@@ -80,7 +84,7 @@ class TestShop(APITestCase):
             "category": self.category.id,
             "supplier": self.supplier.id,
         }
-        # self.client.force_authenticate(self.user)
+        self.client.force_authenticate(self.customer)
         resp = self.client.patch(url, data = body)
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.data["shop_name"], new_shop_Name)
@@ -88,14 +92,18 @@ class TestShop(APITestCase):
     def test_get_shop(self):
 
         url = reverse('api_GetShopDetails', kwargs={'pk': self.single_shop.id})
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
         self.assertEquals(resp.status_code, 200)
 
     def test_delete_shop(self):
         all_url = reverse('api_CreateShop')
+        self.client.force_authenticate(self.customer)
         all_shop = self.client.get(all_url)
 
         url = reverse('api_GetShopDetails', kwargs={'pk': self.single_shop.id})
+
         resp = self.client.delete(url)
         new_all_shop = self.client.get(all_url)
         self.assertEquals(resp.status_code, 204)
@@ -103,14 +111,16 @@ class TestShop(APITestCase):
 
     def test_shop_category(self):
         url = reverse('api_GetShopCategory')
+        # self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
         self.assertEquals(resp.status_code , 200)
 
 class TestProduct(APITestCase):
     def setUp(self):
-        customer = Customer(username='test' , password='1234' , email='test@test.com' , mobile_number='09111111111')
-        customer.save()
-        self.supplier = Supplier.objects.create(customer=customer, supplier_blog= 'testblog')
+        self.customer = Customer(username='test' , password='1234' , email='test@test.com' , mobile_number='09111111111')
+        self.customer.save()
+        self.supplier = Supplier.objects.create(customer=self.customer, supplier_blog= 'testblog')
         self.category = Category.objects.create(category_title='test')
         self.tag = Tag.objects.create(title='test')
 
@@ -125,7 +135,10 @@ class TestProduct(APITestCase):
 
 
     def test_product_list(self):
+    
         url = reverse('api_GetAllCreateProduct')
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
 
         self.assertEquals(resp.status_code,200)
@@ -146,6 +159,8 @@ class TestProduct(APITestCase):
             "tag":{self.tag.id , },
             "category" : {self.category.id ,}
             }
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.post(url , data = body)
         all_product = self.client.get(url)
 
@@ -154,6 +169,8 @@ class TestProduct(APITestCase):
 
     def test_get_product(self):
         url = reverse('api_GetProductDetails' , kwargs={'pk': self.product.id})
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
 
         self.assertEquals(resp.status_code , 200)
@@ -165,7 +182,7 @@ class TestProduct(APITestCase):
         body = {
             "product_name": new_product_Name,
         }
-        # self.client.force_authenticate(self.user)
+        self.client.force_authenticate(self.customer)
         resp = self.client.patch(url, data = body)
         self.assertEqual(resp.status_code, 200)
 
@@ -177,6 +194,8 @@ class TestProduct(APITestCase):
         all_product = self.client.get(all_url)
 
         url = reverse('api_GetProductDetails' , kwargs={'pk': self.product.id})
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.delete(url)
         new_all_product = self.client.get(all_url)
         self.assertEquals(resp.status_code, 204)

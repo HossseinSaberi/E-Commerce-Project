@@ -103,7 +103,6 @@ class AddProductToOrderItems(generics.ListCreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response({'Success': 'The Order items Added Successfuly', 'Data': response_serializer.data}, status=status.HTTP_201_CREATED, headers=headers)
 
-
 class GetRemoveProductFromOrderItem(generics.RetrieveDestroyAPIView):
     queryset = OrderItems.objects.all()
     serializer_class = ListOrderItems

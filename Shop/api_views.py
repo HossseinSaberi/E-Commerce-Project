@@ -61,7 +61,6 @@ class GetDetailsEditDeleteProduct(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object()
-        print(instance.shop__supplier__customer)
         if instance.shop.supplier.customer != request.user:
             return Response(data={'msg': 'this product owned by another user'}, status=400)
         return super().delete(request, *args, **kwargs)

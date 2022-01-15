@@ -35,7 +35,9 @@ class TestOrder(APITestCase):
 
     def test_order_list(self):
         url = reverse('api_GetAllOrder')
+        self.client.force_authenticate(self.customer)
         resp = self.client.get(url)
+
 
         self.assertEquals(resp.status_code , 200)
         self.assertEquals(len(resp.data) , 2)
@@ -57,12 +59,16 @@ class TestOrder(APITestCase):
 
     def test_get_submitted_order(self):
         url = reverse('api_GetAllSubmitOrders')
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
         self.assertEquals(resp.status_code , 200)
         self.assertEquals(len(resp.data) , 1)
 
     def test_set_paid_status(self):
         url = reverse('api_ChangeOrderStatus' , kwargs={'pk': self.order.id})
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.get(url)
 
         self.assertEquals(resp.status_code,200)
@@ -76,6 +82,8 @@ class TestOrder(APITestCase):
             "product" : self.product.id,
             "order" : self.order.id
         }
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.post(url , data=body)
 
         self.assertEquals(resp.status_code , 201)
@@ -83,6 +91,8 @@ class TestOrder(APITestCase):
 
     def test_remove_product_from_basket(self):
         url = reverse('api_GetRemoveProductFromOrderItem' , kwargs={'pk': self.order_item.id})
+        self.client.force_authenticate(self.customer)
+
         resp = self.client.delete(url)
 
         self.assertEquals(resp.status_code , 204)
