@@ -19,7 +19,6 @@ class TestProfile(APITestCase):
            "mobile_number" : '09111111111'
         }
         resp = self.client.put(url , data= body)
-        print(resp.data)
         self.assertEquals(resp.status_code , 200)
         self.assertEquals(resp.data['username'] , "new name")
 

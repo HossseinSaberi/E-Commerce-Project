@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, logout, get_user_model , login
 from django.contrib.auth import get_user_model
-from .forms import LoginForm, SignInForm
+from .forms import LoginForm, SignInForm , MobileLoginForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from Users.models import Supplier , Customer
@@ -20,7 +20,7 @@ def log_in(request):
             username = request.POST['username']
             password = request.POST['password']
             try:
-                get_user = Customer.suppliers.filter(Q(username = username) |  Q(email=username))
+                get_user = Customer.suppliers.filter(Q(username = username) |  Q(email=username) | Q(mobile_number=username))
             except:
                 get_user = None
                 
@@ -44,7 +44,12 @@ def log_in(request):
 # TODO
 # it doesnot work check it
 # its problem is after press submit button
-
+def mobile_log_in(request):
+    if request.method =='POST':
+        form = MobileLoginForm(request.POST )
+        if form.is_valid():
+            username = request.POST['mobile_number']
+            '''use login def for continue'''
 
 def sign_in(request):
 
@@ -56,12 +61,12 @@ def sign_in(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             mobile = form.cleaned_data.get('mobile_number')
-            sign_in_user = CreateUser(username=username,password=password,email=email,is_supplier=True,mobile_number = mobile)
+            sign_in_user = CreateUser(username=username,email=email,is_supplier=True,mobile_number = mobile)
             new_supplier = Supplier(customer=sign_in_user,supplier_blog=username+'_Blog ')
+            sign_in_user.set_password(password)
             sign_in_user.save()
             new_supplier.save()
             print(sign_in_user)
-            login(request, sign_in_user)
             messages.success(
                 request, "You're Registering was Success", extra_tags='success')
             return redirect(reverse('log_in'))

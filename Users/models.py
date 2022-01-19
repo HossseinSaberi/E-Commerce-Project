@@ -6,13 +6,14 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 
-from .managers import CustomUserManager , SupplierManager
+from .managers import CustomUserManager , SupplierManager , ActiveManager
 # Create your models here.
 PHONE_NUMBER_REGEX = RegexValidator(r'^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$')
 
 class Customer (AbstractUser):
     objects = CustomUserManager()
     suppliers = SupplierManager()
+    active = ActiveManager()
 
     username = models.CharField(max_length=255, unique=True)
     # password = models.CharField(max_length=255)
@@ -54,5 +55,5 @@ class Supplier(models.Model):
     class Meta:
         verbose_name = 'Supplier'
 
-    # def __str__(self):
-    #     return self.customer.username
+    def __str__(self):
+        return self.customer.username

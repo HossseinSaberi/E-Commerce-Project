@@ -8,4 +8,4 @@ from .models import OrderItems , Orders
 class EditOrderDetails(forms.ModelForm):
     class Meta:
         model = Orders
-        fields = '__all__'
+        fields = ['status' , 'discount' , 'user' , 'shop']
