@@ -180,6 +180,10 @@ class ShowAllProduct(LoginRequiredMixin, ListView):
     template_name = 'ManagerTemplate/ProductTemplate/ListProduct.html'
     context_object_name = 'all_Product'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(shop__supplier__customer = self.request.user)
+    
+
 
 class DeleteProduct(LoginRequiredMixin, DeleteView):
     """its for deleting some product """

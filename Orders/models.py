@@ -34,15 +34,6 @@ class Orders(models.Model):
     status = models.IntegerField(("Status"), choices=STATUS , default=3)
     update_at = models.DateTimeField(("Update at"),  auto_now_add=False, null=True , blank=True)
 
-    @property
-    def total_price(self):
-        result = Orders.objects.aggregate(sum = Sum(F('product__price')*F('order_item__quantity')))
-        return result['sum']
-
-    @property
-    def calculate_discount(self):
-        return self.total_price-(self.total_price*(self.discount)/100)
-
     class Meta:
         verbose_name = 'Order'
 

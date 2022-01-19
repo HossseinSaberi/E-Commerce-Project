@@ -7,7 +7,7 @@
     
     <div class="row">
       <div class="mx-1">
-        <canvas id="population-chart" width="400" height="100" data-url="{% url 'population-chart' %}"></canvas>
+        <canvas id="population-chart" width="400" height="150" data-url="{% url 'population-chart' %}"></canvas>
       </div>
     </div>
 
@@ -65,13 +65,13 @@
                     {{object.status}}
                 </td>
                 <td>
-                    {{object.total_price}}
+                    {{object.all_sold}}
                 </td>
                 <td>
                     {{object.discount}}
                 </td>
                 <td>
-                    {{object.calculate_discount}}
+                    {{object.all_sold_with_discount}}
                 </td>
                 <td>
                   {{object.update_at}}
@@ -98,14 +98,12 @@
         $(function () {
           const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')
           var $populationChart = $("#population-chart");
-          console.log($populationChart)
           $.ajax({
           url: "http://localhost:8000/manage_order/ListOrderGraph/",
           headers: {
           'X-CSRFToken': csrftoken
           },
           success: function (data) {
-          console.log('data label', data)
           var ctx = $populationChart[0].getContext("2d");
           new Chart(ctx, {
           type: 'bar',
@@ -113,11 +111,34 @@
           labels: data.labels,
           datasets: [{
           label: 'Sales',
-          backgroundColor: 'purple',
+          backgroundColor: 
+        [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderColor:[
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+      ],
           data: data.data
           }]
           },
           options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+          },
           responsive: true,
           legend: {
           position: 'top',
@@ -126,11 +147,6 @@
           display: true,
           text: 'Sales Report Bar Chart'
           },
-          scales: {
-            x: {
-                beginAtZero: true
-            }
-            }
         }
           });
           }

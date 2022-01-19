@@ -13,7 +13,7 @@ class CustomerAdmin(UserAdmin):
     fieldsets = (
         ( None , {
             'classes' : ('wide',),
-            'fields' : (('username' , 'password') , ('first_name' , 'last_name') , ('email' , 'mobile_number') , ('user_image', 'age' , 'is_supplier')),
+            'fields' : (('username' , 'password') , ('first_name' , 'last_name') , ('email' , 'mobile_number') , ('user_image') , ('is_supplier' , 'is_active' , 'age')),
      }
         ),
     )
@@ -21,7 +21,7 @@ class CustomerAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': (('username','email'), ('password1', 'password2'), ('is_staff', 'is_active'))}
+            'fields': (('username','email', 'is_active'), ('password1', 'password2'), ('mobile_number' , 'is_staff'))}
         ),
     )
     def show_image(self, obj):
