@@ -49,7 +49,10 @@ INSTALLED_APPS = [
     'drf_yasg',
 ]
 AUTHENTICATION_BACKENDS = [
-    'account.backends.EmailOrUsernameModelBackend',
+    'account.backends.EmailModelBackend',
+    'account.backends.UserNameModelBackend',
+    'account.backends.MobileModelBackend',
+    'account.backends.OneTimeMobilePassword',
     'django.contrib.auth.backends.ModelBackend',
 ]
 REST_FRAMEWORK = {
@@ -112,6 +115,9 @@ DATABASES = {
         'PORT': PORT,
     }
 }
+
+REDIS_HOST = REDIS_OTP_HOST
+REDIS_PORT = REDIS_OTP_PORT
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

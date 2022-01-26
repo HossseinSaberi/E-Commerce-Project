@@ -13,7 +13,7 @@ class CustomerAdmin(UserAdmin):
     fieldsets = (
         ( None , {
             'classes' : ('wide',),
-            'fields' : (('username' , 'password') , ('first_name' , 'last_name') , ('email' , 'mobile_number') , ('user_image') , ('is_supplier' , 'is_active' , 'age')),
+            'fields' : (('username' , 'password') , ('first_name' , 'last_name') , ('email' , 'mobile_number') , ('user_image') , ('is_mobile_submitted' , 'is_supplier' , 'is_active' , 'age')),
      }
         ),
     )

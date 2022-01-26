@@ -1,4 +1,5 @@
 from cProfile import label
+from wsgiref.validate import validator
 from django import forms
 from django.contrib.auth.forms import UserCreationForm , UserChangeForm
 from django.contrib.auth import get_user_model
@@ -22,5 +23,11 @@ class SignInForm(UserCreationForm):
         fields = ('Email' , 'username' , 'password1' ,'password2' , 'mobile_number')
 
 
-class MobileLoginForm(forms.Form):
+class MobileActivateForm(forms.Form):
     mobile_number = forms.CharField(label='MobileNumber' , validators=[PHONE_NUMBER_REGEX])
+
+class SubmittedCodeForm(forms.ModelForm):
+    code = forms.CharField(max_length=5 , label='Code')
+    class Meta:
+        model = Customer
+        fields= ['code']

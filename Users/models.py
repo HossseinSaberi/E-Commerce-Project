@@ -16,7 +16,6 @@ class Customer (AbstractUser):
     active = ActiveManager()
 
     username = models.CharField(max_length=255, unique=True)
-    # password = models.CharField(max_length=255)
     email = models.EmailField(_('email address'), unique=True)
     user_image = models.ImageField(
         'Profile Image',  upload_to='customerImage/', null=True, blank=True)
@@ -25,7 +24,7 @@ class Customer (AbstractUser):
     mobile_number = models.CharField(
         ("Mobile Number"), max_length=15, unique=True ,  validators=[PHONE_NUMBER_REGEX])
     is_supplier = models.BooleanField(("is Supplier"), default=False)
-
+    is_mobile_submitted = models.BooleanField(("is mobile submitted") , default=False)
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):

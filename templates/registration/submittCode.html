@@ -1,0 +1,24 @@
+{% extends 'MainTemplate.html' %}
+{% load widget_tweaks %}
+{% block Login %}
+<div class="container my-5 py-5 border rounded">
+  <div class="row">
+    <h2  class='d-flex justify-content-center m-5'>Activate {{request.user.mobile_number}}</h2>
+  </div>
+  <form method="POST">
+    {% csrf_token %} 
+    <div class="container">
+      <div class="row  d-flex justify-content-center m-5 ">
+        <div class="col-md-6">
+          <label>Activation Code :</label>
+          {%render_field form.code  class="form-control input-lg" placeholder="Enter Activation Code Here ..." %}
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center my-3">
+      <button class='btn btn-lg btn-primary mx-2' type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+{% endblock Login %}

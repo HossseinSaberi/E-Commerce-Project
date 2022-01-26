@@ -29,9 +29,15 @@
                     <br/>
                     <div class="row" data-aos="fade-up" data-aos-delay="100">
                     <div class="col-lg-12 d-flex justify-content-center">
-                        <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">{{cat_or_tag}}</li>
-                        </ul>
+                        {% if request.user.is_authenticated %}
+                            {% if not request.user.is_mobile_submitted %}
+                                <div data-filter="*" class="btn btn-danger mb-2"><a href='/account/activation'>Activate Your Mobile Number</a></div>
+                            {% endif %}
+                        {% else %}
+                            <ul id="portfolio-flters">
+                            <li data-filter="*" class="filter-active">{{cat_or_tag}}</li>
+                            </ul>
+                        {% endif %}
                     </div>
 
                         
